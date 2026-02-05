@@ -46,3 +46,8 @@ $RECYCLE.BIN/
 **/__pycache__/
 **/.venv/
 **/venv/
+
+
+# Ignore Settings from Scratch Org
+force-app/main/default/settings/**
+
