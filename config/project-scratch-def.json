@@ -1,84 +1,50 @@
 {
-  "orgName": "Scratch Org",
-  "edition": "Developer",
-  "adminEmail": "zihernlee689@gmail.com",
-  "features": [
-    "EnableSetPasswordInApi",
-    "EinsteinGPTForDevelopers",
-    "DevelopmentAnalytics",
-    "CampaignEinsteinSettings",
-    "Communities",
-    "B2BMarketingExtra",
-    "DevOpsCenter",
-    "ShieldEncryption",
-    "StateAndCountryNeutralStatus",
-    "TerritoryManagement2",
-    "CustomerDataPlatform"
-  ],
-  "settings": {
-    "analyticsSettings": {
-      "canShareAppsWithCommunities": true,
-      "enableAnalytics": true
-    },
-    "campaignSettings": {
-      "enableEinsteinAttribution": true
-    },
-    "communitiesSettings": {
-      "enableNetworksEnabled": true
-    },
-    "experienceBundleSettings": {
-      "enableExperienceBundleMetadata": true
-    },
-    "devHubSettings": {
-      "enableDevOpsCenterGA": true
-    },
-    "emailAdministrationSettings": {
-      "enableEmailSenderIdCompliance": true
-    },
-    "languageSettings": {
-      "enableTranslationWorkbench": true,
-      "useLanguageFallback": true
-    },
-    "pardotSettings": {
-      "enablePardotAppV1Enabled": true
-    },
-    "platformEncryptionSettings": {
-      "isMEKForEncryptionRequired": true,
-      "enableEncryptionKeyManagement": true
-    },
-    "securitySettings": {
-      "enableAdminLoginAsAnyUser": true,
-      "sessionSettings": {
-        "forceRelogin": false
-      }
-    },
-    "lightningExperienceSettings": {
-      "enableS1DesktopEnabled": true,
-      "enableLightningPreviewPref": true
-    },
-    "mobileSettings": {
-      "enableS1EncryptedStoragePref2": false
-    },
-    "userManagementSettings": {
-      "permsetsInFieldCreation": true
-    },
-    "chatterSettings": {
-      "enableChatter": true
-    },
-    "apexSettings": {
-      "enableDisableParallelApexTesting": false,
-      "enableCompileOnDeploy": true
-    },
-    "deploymentSettings": {
-      "doesSkipAsyncApexValidation": true
-    }
-  },
-  "objectSettings": {
-    "account": {
-      "sharingModel": "readWrite"
-    },
-    "contact": {
-      "sharingModel": "readWrite"
-    }
-  }
+	"orgName": "Scratch Org",
+	"edition": "Developer",
+    "adminEmail": "zihernlee689@gmail.com",
+	"features": [
+		"EnableSetPasswordInApi", "EinsteinGPTForDevelopers"
+	],
+	"settings": {
+		"lightningExperienceSettings": {
+			"enableS1DesktopEnabled": true,
+			"enableLightningPreviewPref": true
+		},
+		"mobileSettings": {
+			"enableS1EncryptedStoragePref2": false
+		},
+		"communitiesSettings": {
+			"enableNetworksEnabled": true
+		},
+		"securitySettings": {
+			"enableAdminLoginAsAnyUser": true,
+			"sessionSettings": {
+				"forceRelogin": false
+			}
+		},
+		"userManagementSettings": {
+			"permsetsInFieldCreation": true
+		},
+		"chatterSettings": {
+			"enableChatter": true
+		},
+		"apexSettings": {
+			"enableDisableParallelApexTesting": false,
+			"enableCompileOnDeploy": true
+		},
+		"experienceBundleSettings": {
+			"enableExperienceBundleMetadata": true
+		},
+		"deploymentSettings": {
+			"doesSkipAsyncApexValidation": true
+		}
+	},
+	"objectSettings": {
+		"account": {
+			"sharingModel": "readWrite"
+		},
+		"contact": {
+			"sharingModel": "readWrite"
+		}
+	}
 }
