@@ -775,10 +775,10 @@
         <enabled>true</enabled>
         <name>ExternalClientAppViewer</name>
     </userPermissions>
-    <userPermissions>
+    <!-- <userPermissions>
         <enabled>true</enabled>
         <name>FieldServiceAccess</name>
-    </userPermissions>
+    </userPermissions> -->
     <userPermissions>
         <enabled>true</enabled>
         <name>FreezeUsers</name>
