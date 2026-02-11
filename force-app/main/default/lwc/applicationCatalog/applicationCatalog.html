@@ -1,0 +1,38 @@
+<template>
+    <lightning-card title="Rio University Catalog" icon-name="standard:catalog">
+        <div class="slds-p-around_medium">
+            <template if:true={userNationality}>
+                <lightning-accordion allow-multiple-sections-open active-section-name="Undergrad">
+                    
+                    <lightning-accordion-section name="Undergrad" label="Undergraduate Program">
+                        
+                        <div class="slds-m-bottom_large">
+                            <h3 class="slds-text-heading_small slds-m-bottom_small slds-text-color_default">
+                                <strong>{categoryHeader}</strong>
+                            </h3>
+
+                            <template if:true={hasRequirements}>
+                                <ul class="slds-list_ordered slds-m-left_medium">
+                                    <template for:each={requirements} for:item="req">
+                                        <li key={req.Id} class="slds-m-vertical_xx-small">
+                                            {req.MasterLabel}
+                                        </li>
+                                    </template>
+                                </ul>
+                            </template>
+
+                            <template if:false={hasRequirements}>
+                                <p class="slds-text-color_weak">No requirements found for this category.</p>
+                            </template>
+                        </div>
+
+                    </lightning-accordion-section>
+                </lightning-accordion>
+            </template>
+
+            <template if:true={error}>
+                <p class="slds-text-color_error">{error}</p>
+            </template>
+        </div>
+    </lightning-card>
+</template>
