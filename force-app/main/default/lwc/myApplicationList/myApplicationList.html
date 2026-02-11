@@ -1,0 +1,16 @@
+<template>
+    <lightning-card title="MY APPLICATION" icon-name="standard:case">
+        <div class="slds-p-around_medium">
+            <lightning-datatable
+                key-field="Id"
+                data={applicationData}
+                columns={columns}
+                hide-checkbox-column
+                onrowaction={handleRowAction}> </lightning-datatable>
+            
+            <template if:false={applicationData.length}>
+                <p class="slds-text-align_center slds-m-top_medium">No applications found.</p>
+            </template>
+        </div>
+    </lightning-card>
+</template>

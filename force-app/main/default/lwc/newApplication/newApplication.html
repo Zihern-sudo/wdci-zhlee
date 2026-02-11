@@ -1,0 +1,55 @@
+<template>
+    <lightning-card title="RIO University Undergraduate Program Application Form">
+        <div class="slds-p-around_medium">
+            
+            <template if:true={isStepOne}>
+                <div class="slds-grid slds-wrap">
+                    <lightning-input label="First Name" data-id="firstName" value={appData.firstName} class="slds-size_1-of-2 slds-p-around_x-small" read-only></lightning-input>
+                    <lightning-input label="Last Name" data-id="lastName" value={appData.lastName} class="slds-size_1-of-2 slds-p-around_x-small" read-only></lightning-input>
+                    <lightning-input label="Email" type="email" data-id="email" value={appData.email} class="slds-size_1-of-1 slds-p-around_x-small" read-only></lightning-input>
+                    <lightning-input label="Mobile" type="tel" data-id="mobile" value={appData.mobile} class="slds-size_1-of-1 slds-p-around_x-small" read-only></lightning-input>
+                    <lightning-input label="Date of Birth" type="date" data-id="dob" value={appData.dob} class="slds-size_1-of-1 slds-p-around_x-small" read-only></lightning-input>
+                    <lightning-combobox label="Gender" data-id="gender" value={appData.gender} options={genderOptions} class="slds-size_1-of-1 slds-p-around_x-small" read-only></lightning-combobox>
+                    <lightning-combobox label="Nationality" data-id="nationality" value={appData.nationality} options={nationalityOptions} class="slds-size_1-of-1 slds-p-around_x-small" read-only></lightning-combobox>
+                    
+                    <lightning-input label="High School Name" data-id="highSchoolName" onchange={handleChange} class="slds-size_1-of-1 slds-p-around_x-small"></lightning-input>
+                    <lightning-combobox label="Highest Education Level" data-id="highestEducationLevel" options={eduOptions} onchange={handleChange} class="slds-size_1-of-1 slds-p-around_x-small" required></lightning-combobox>
+                    <lightning-combobox label="How do you know about us?" data-id="source" options={sourceOptions} onchange={handleChange} class="slds-size_1-of-1 slds-p-around_x-small" required></lightning-combobox>
+                </div>
+                <div class="slds-m-top_medium slds-text-align_right">
+                    <lightning-button label="Next" variant="brand" onclick={handleNext}></lightning-button>
+                </div>
+            </template>
+
+            <template if:true={isStepTwo}>
+                <div class="slds-m-bottom_medium">
+                    <h2 class="slds-text-heading_small">Required Documents for: <strong>{nationalityLabel}</strong></h2>
+                    <ul class="slds-list_dotted slds-m-left_medium slds-m-vertical_small">
+                        <template for:each={requirements} for:item="req">
+                            <li key={req.MasterLabel}>{req.MasterLabel}</li>
+                        </template>
+                    </ul>
+                </div>
+
+                <lightning-file-upload
+                    label="Upload Required Files"
+                    name="fileUploader"
+                    record-id={applicationId}
+                    onuploadfinished={handleUploadFinished}
+                    multiple>
+                </lightning-file-upload>
+
+                <div class="slds-m-top_medium slds-text-align_right">
+                    <lightning-button label="Submit Application" variant="brand" onclick={handleFinish}></lightning-button>
+                </div>
+            </template>
+
+            <template if:true={isStepThree}>
+                <div class="slds-box slds-theme_success slds-theme_alert-texture">
+                    <p>Thank you. You will be updated through email regarding the application progress.</p>
+                </div>
+            </template>
+
+        </div>
+    </lightning-card>
+</template>
