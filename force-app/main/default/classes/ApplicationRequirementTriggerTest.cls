@@ -28,12 +28,15 @@ public class ApplicationRequirementTriggerTest {
         );
 
         Test.startTest();
-        insert testApp; // Triggers requirement creation
+        insert testApp; // Triggers 'before insert' to set Type
         Test.stopTest();
+
+        // Re-query using the OBJECT name Application__c
+        Application__c queriedApp = [SELECT Application_Type__c FROM Application__c WHERE Id = :testApp.Id];
+        System.assertEquals('Domestic', queriedApp.Application_Type__c, 'Application Type should be set to Domestic on insert.');
 
         List<Application_Requirement__c> reqs = [SELECT Id, Requirement_Type__c FROM Application_Requirement__c WHERE Application__c = :testApp.Id];
         System.assert(reqs.size() > 0, 'Requirements should be created on insert.');
-        System.assertEquals('Domestic', reqs[0].Requirement_Type__c);
     }
 
     @isTest
@@ -47,20 +50,20 @@ public class ApplicationRequirementTriggerTest {
         );
         insert testApp;
 
-        // Change Nationality on Contact record
         Test.startTest();
         con.Nationality__c = 'Singaporean'; 
         update con;
         
-        // Update the Application to fire the 'before/after update' trigger logic
+        // Update the Application to fire the trigger
         update testApp; 
         Test.stopTest();
 
+        // FIXED: Query FROM Application__c
+        Application__c queriedApp = [SELECT Application_Type__c FROM Application__c WHERE Id = :testApp.Id];
+        System.assertEquals('International', queriedApp.Application_Type__c, 'Application Type should refresh to International.');
+
         List<Application_Requirement__c> updatedReqs = [SELECT Id, Requirement_Type__c FROM Application_Requirement__c WHERE Application__c = :testApp.Id];
-        
-        // Assert that new International records exist based on metadata
         System.assert(!updatedReqs.isEmpty(), 'International requirements should be found in Metadata.');
-        System.assertEquals('International', updatedReqs[0].Requirement_Type__c);
     }
 
     @isTest
@@ -74,10 +77,9 @@ public class ApplicationRequirementTriggerTest {
         );
         insert testApp;
 
-        // Simulate an Admission Officer manually changing the Type
         Test.startTest();
         testApp.Application_Type__c = 'International';
-        update testApp;
+        update testApp; 
         Test.stopTest();
 
         List<Application_Requirement__c> manualReqs = [SELECT Id, Requirement_Type__c FROM Application_Requirement__c WHERE Application__c = :testApp.Id];

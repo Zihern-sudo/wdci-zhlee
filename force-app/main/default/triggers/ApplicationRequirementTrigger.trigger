@@ -1,4 +1,4 @@
-trigger ApplicationRequirementTrigger on Application__c (after insert, before update, after update) {
+trigger ApplicationRequirementTrigger on Application__c (before insert, after insert, before update, after update) {
     
     // Step 1: Collect Contact IDs to fetch fresh Nationality data directly
     Set<Id> contactIds = new Set<Id>();
@@ -13,16 +13,23 @@ trigger ApplicationRequirementTrigger on Application__c (after insert, before up
         SELECT Id, Nationality__c FROM Contact WHERE Id IN :contactIds
     ]);
 
-    // --- BEFORE UPDATE: Sync Nationality to Application Type ---
-    if (Trigger.isBefore && Trigger.isUpdate) {
+    // --- BEFORE INSERT & BEFORE UPDATE: Sync Nationality to Application Type ---
+    if (Trigger.isBefore) {
         for (Application__c app : Trigger.new) {
-            Application__c oldApp = Trigger.oldMap.get(app.Id);
             String currentNat = applicantMap.get(app.Applicant__c)?.Nationality__c;
             
-            // Sync Type if Nationality (on Contact) changed and Type was not manually overridden
-            if (app.Application_Type__c == oldApp.Application_Type__c) {
+            if (Trigger.isInsert) {
+                // Set initial Application Type on creation
                 app.Application_Type__c = (currentNat != null && currentNat.equalsIgnoreCase('Malaysian')) 
                                           ? 'Domestic' : 'International';
+            } 
+            else if (Trigger.isUpdate) {
+                // Sync Type if Nationality changed and Type was not manually overridden
+                Application__c oldApp = Trigger.oldMap.get(app.Id);
+                if (app.Application_Type__c == oldApp.Application_Type__c) {
+                    app.Application_Type__c = (currentNat != null && currentNat.equalsIgnoreCase('Malaysian')) 
+                                              ? 'Domestic' : 'International';
+                }
             }
         }
     }
@@ -44,7 +51,7 @@ trigger ApplicationRequirementTrigger on Application__c (after insert, before up
         }
 
         if (!appsToRefresh.isEmpty()) {
-            // Delete old requirements
+            // Delete old requirements to prevent duplicates
             delete [SELECT Id FROM Application_Requirement__c WHERE Application__c IN :appsToRefresh];
 
             // Fetch correctly configured Metadata
@@ -54,7 +61,7 @@ trigger ApplicationRequirementTrigger on Application__c (after insert, before up
                 Application__c currentApp = Trigger.newMap.get(appId);
                 String typeToMatch = currentApp.Application_Type__c;
 
-                // For initial insert, if Type is null, calculate it once more
+                // Fallback: If Type is somehow still null, calculate it once more
                 if (String.isBlank(typeToMatch)) {
                     String nat = applicantMap.get(currentApp.Applicant__c)?.Nationality__c;
                     typeToMatch = (nat != null && nat.equalsIgnoreCase('Malaysian')) ? 'Domestic' : 'International';
