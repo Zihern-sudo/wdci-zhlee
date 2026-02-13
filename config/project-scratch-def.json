@@ -3,7 +3,7 @@
 	"edition": "Developer",
     "adminEmail": "zihernlee689@gmail.com",
 	"features": [
-		"EnableSetPasswordInApi", "EinsteinGPTForDevelopers", "ActionPlans"
+		"EnableSetPasswordInApi", "EinsteinGPTForDevelopers"
 	],
 	"settings": {
 		"lightningExperienceSettings": {
@@ -37,9 +37,6 @@
 		},
 		"deploymentSettings": {
 			"doesSkipAsyncApexValidation": true
-		},
-		"actionPlanSettings": {
-			"enableActionPlans": true
 		}
 	},
 	"objectSettings": {
