@@ -36,9 +36,9 @@
     <headlessRegistrationTemplate>unfiled$public/CommunityHeadlessRegistrationTemplate</headlessRegistrationTemplate>
     <networkMemberGroups>
         <permissionSet>Senior_Admission_Officer</permissionSet>
-        <profile>Admin </profile>
-        <profile>Applicant</profile>
-        <profile>Admission Officer</profile>
+        <profile>admission officer</profile>
+        <profile>applicant</profile>
+        <profile>admin</profile>
     </networkMemberGroups>
     <networkPageOverrides>
         <changePasswordPageOverrideSetting>Standard</changePasswordPageOverrideSetting>
@@ -52,7 +52,7 @@
     <sendWelcomeEmail>true</sendWelcomeEmail>
     <site>Admission_Portal</site>
     <siteArchiveStatus>NotArchived</siteArchiveStatus>
-    <status>Live</status>
+    <status>DownForMaintenance</status>
     <tabs>
         <defaultTab>home</defaultTab>
         <standardTab>Chatter</standardTab>
