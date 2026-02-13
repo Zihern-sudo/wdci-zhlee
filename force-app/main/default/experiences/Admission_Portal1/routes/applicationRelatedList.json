@@ -1,0 +1,12 @@
+{
+  "activeViewId" : "b3225883-d3db-475e-9119-f158f9d1f2ad",
+  "appPageId" : "59823954-b2df-4c71-8139-9b836dbf58ed",
+  "configurationTags" : [ ],
+  "devName" : "Application_Related_List__c",
+  "id" : "7cfff68b-1e6c-4540-97e3-882f1749c271",
+  "label" : "Application Related List",
+  "objectApiName" : "Application__c",
+  "routeType" : "relatedlist-a01",
+  "type" : "route",
+  "urlPrefix" : "application"
+}
