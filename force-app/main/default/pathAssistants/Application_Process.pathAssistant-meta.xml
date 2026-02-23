@@ -4,5 +4,5 @@
     <entityName>Application__c</entityName>
     <fieldName>Application_Status__c</fieldName>
     <masterLabel>Application Process</masterLabel>
-    <recordTypeName>General_Application</recordTypeName>
+    <recordTypeName>Application_Process</recordTypeName>
 </PathAssistant>

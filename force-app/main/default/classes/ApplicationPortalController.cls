@@ -1,42 +1,40 @@
 public with sharing class ApplicationPortalController {
     
-    @AuraEnabled(cacheable=true)
-    public static Contact getLoggedInContact() {
-        // Fetch the Contact details linked to the logged-in Portal User
-        User u = [SELECT ContactId FROM User WHERE Id = :UserInfo.getUserId() LIMIT 1];
-        if (u.ContactId == null) return null;
+  @AuraEnabled(cacheable=true)
+public static Contact getLoggedInContact() {
+    User u = [SELECT ContactId FROM User WHERE Id = :UserInfo.getUserId() LIMIT 1];
+    if (u.ContactId == null) return null;
 
-        return [SELECT FirstName, LastName, Email, MobilePhone, Birthdate, Gender__c, Nationality__c 
-                FROM Contact 
-                WHERE Id = :u.ContactId LIMIT 1];
+    // Added Account.Name and AccountId to the query
+    return [SELECT FirstName, LastName, Email, MobilePhone, Birthdate, Gender__c, Nationality__c,
+                   AccountId, Account.Name 
+            FROM Contact 
+            WHERE Id = :u.ContactId LIMIT 1];
+}
+
+@AuraEnabled
+public static String submitApplication(Map<String, Object> appData) {
+    try {
+        User currentUser = [SELECT ContactId FROM User WHERE Id = :UserInfo.getUserId() LIMIT 1];
+        Id contactId = currentUser.ContactId;
+
+        // Fetch the ID directly from the data passed by the LWC
+        String programId = (String)appData.get('appliedProgramId');
+
+        Application__c newApp = new Application__c();
+        newApp.Applicant__c = contactId; 
+        newApp.Applied_Program__c = (Id)programId;
+        newApp.High_School_Name__c = (String)appData.get('highSchoolName'); 
+        newApp.Highest_Education_Level__c = (String)appData.get('highestEducationLevel');
+        newApp.Source__c = (String)appData.get('source');
+        newApp.Application_Status__c = 'Submitted';
+
+        insert newApp;
+        return newApp.Id;
+    } catch (Exception e) {
+        throw new AuraHandledException('Error: ' + e.getMessage());
     }
-
-    @AuraEnabled
-    public static String submitApplication(Map<String, Object> appData) {
-        try {
-            // Securely get the Contact ID from the session
-            User currentUser = [SELECT ContactId FROM User WHERE Id = :UserInfo.getUserId() LIMIT 1];
-            Id contactId = currentUser.ContactId;
-
-            // Find the 'Undergraduate' Program Account ID
-            List<Account> programs = [SELECT Id FROM Account WHERE Name = 'Undergraduate' LIMIT 1];
-            Id programId = !programs.isEmpty() ? programs[0].Id : null;
-
-            // Create the Application record linked to the existing Contact
-            Application__c newApp = new Application__c();
-            newApp.Applicant__c = contactId; 
-            newApp.Applied_Program__c = programId;
-            newApp.High_School_Name__c = (String)appData.get('highSchoolName'); 
-            newApp.Highest_Education_Level__c = (String)appData.get('highestEducationLevel');
-            newApp.Source__c = (String)appData.get('source');
-            newApp.Application_Status__c = 'Submitted';
-
-            insert newApp;
-            return newApp.Id;
-        } catch (Exception e) {
-            throw new AuraHandledException('Error: ' + e.getMessage());
-        }
-    }
+}
 
     @AuraEnabled(cacheable=true)
     public static String getUserNationality() {
