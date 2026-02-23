@@ -12,6 +12,8 @@
                     <lightning-combobox label="Gender" data-id="gender" value={appData.gender} options={genderOptions} class="slds-size_1-of-1 slds-p-around_x-small" read-only></lightning-combobox>
                     <lightning-combobox label="Nationality" data-id="nationality" value={appData.nationality} options={nationalityOptions} class="slds-size_1-of-1 slds-p-around_x-small" read-only></lightning-combobox>
                     
+                    <lightning-input label="Applied Program" data-id="appliedProgram" value={appData.appliedProgramName} class="slds-size_1-of-1 slds-p-around_x-small" read-only></lightning-input>
+
                     <lightning-input label="High School Name" data-id="highSchoolName" onchange={handleChange} class="slds-size_1-of-1 slds-p-around_x-small"></lightning-input>
                     <lightning-combobox label="Highest Education Level" data-id="highestEducationLevel" options={eduOptions} onchange={handleChange} class="slds-size_1-of-1 slds-p-around_x-small" required></lightning-combobox>
                     <lightning-combobox label="How do you know about us?" data-id="source" options={sourceOptions} onchange={handleChange} class="slds-size_1-of-1 slds-p-around_x-small" required></lightning-combobox>

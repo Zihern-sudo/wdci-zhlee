@@ -12,22 +12,25 @@ export default class NewApplicationForm extends NavigationMixin(LightningElement
     @track nationalityLabel = '';
     @track appData = {};
 
-    @wire(getLoggedInContact)
-    wiredContact({ error, data }) {
-        if (data) {
-            this.appData = {
-                firstName: data.FirstName,
-                lastName: data.LastName,
-                email: data.Email,
-                mobile: data.MobilePhone,
-                dob: data.Birthdate,
-                gender: data.Gender__c,
-                nationality: data.Nationality__c
-            };
-        } else if (error) {
-            console.error('Error fetching contact:', error);
-        }
+  @wire(getLoggedInContact)
+wiredContact({ error, data }) {
+    if (data) {
+        this.appData = {
+            firstName: data.FirstName,
+            lastName: data.LastName,
+            email: data.Email,
+            mobile: data.MobilePhone,
+            dob: data.Birthdate,
+            gender: data.Gender__c,
+            nationality: data.Nationality__c,
+            // Fetch the Account Name for display and ID for the insert
+            appliedProgramName: data.Account ? data.Account.Name : '',
+            appliedProgramId: data.AccountId
+        };
+    } else if (error) {
+        console.error('Error fetching contact:', error);
     }
+}
 
     genderOptions = [{ label: 'Male', value: 'Male' }, { label: 'Female', value: 'Female' }, { label: 'Not to Disclose', value: 'Not to Disclose' }];
     nationalityOptions = [{ label: 'Domestic (Malaysian)', value: 'Malaysian' }, { label: 'International (Others)', value: 'Singaporean' }];
